@@ -28,7 +28,10 @@
     <ul style="list-style-type: none;">
         @foreach($tweets as $tweet)
             <li style="margin-bottom: 20px; padding: 10px; border: 1px solid #ccc;">
-                {{ $tweet->content }}
+                <!-- ツイート内容をクリックすると詳細ページに移動するリンク-->
+                <a href="{{ route('tweets.show', $tweet->id) }}" class="tweet-text text-dark text-decoration-none">
+                    {{ $tweet->content }}
+                </a>
 
                 @if($authId === $tweet->user_id && auth()->check() && is_null(auth()->user()->deleted_at))
                     <a href="{{ route('tweets.edit', $tweet->id) }}">ツイートを編集する</a>
