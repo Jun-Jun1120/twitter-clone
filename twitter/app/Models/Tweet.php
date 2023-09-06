@@ -19,10 +19,11 @@ class Tweet extends Model
      *
      * @return BelongsTo
      */
-    public function user(): BelongsTo
+    public function user():BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withDefault(['name' => '削除されたユーザー',]);
     }
+
 
     /**
      * 全てのツイートを作成日時の降順で取得

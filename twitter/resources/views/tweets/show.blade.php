@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ $tweet->user->name }} のツイート
+                    {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}のツイート
                 </div>
                 <div class="card-body">
                     {{ $tweet->content }}
