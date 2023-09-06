@@ -64,7 +64,7 @@ class Tweet extends Model
      * @param int $tweetId
      * @return Tweet
      */
-    public function findByTweetId(int $tweetId): Tweet
+    public function findByTweetId(int $tweetId): ?Tweet
     {
         return $this->find($tweetId);
     }

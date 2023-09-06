@@ -64,9 +64,9 @@ class TweetController extends Controller
             $tweet = new Tweet();
             $tweet = $tweet->findByTweetId($tweetId);
 
-            if (is_null($tweet) || !($tweet instanceof Tweet)) {
-                throw new \Exception('ツイートが見つかりませんでした。');
-            }
+        if (is_null($tweet) || !($tweet instanceof Tweet)) {
+            return redirect()->route('tweets.index')->with('message', 'このツイートは既に削除されています');
+        }
 
             return view('tweets.show', ['tweet' => $tweet]);
         } catch (\Exception $e) {
