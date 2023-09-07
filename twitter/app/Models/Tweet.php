@@ -3,14 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 class Tweet extends Model
 {
     use HasFactory;
 
     protected $fillable = ['content', 'user_id'];
+
+    /**
+     * ユーザーとのリレーションシップを定義
+     *
+     * @return BelongsTo
+     */
+    public function user():BelongsTo
+    {
+        return $this->belongsTo(User::class)->withDefault(['name' => '削除されたユーザー',]);
+    }
+
 
     /**
      * 全てのツイートを作成日時の降順で取得
@@ -52,7 +65,7 @@ class Tweet extends Model
      * @param int $tweetId
      * @return Tweet
      */
-    public function findByTweetId(int $tweetId): Tweet
+    public function findByTweetId(int $tweetId): ?Tweet
     {
         return $this->find($tweetId);
     }
@@ -79,5 +92,4 @@ class Tweet extends Model
         $tweet = $this->find($tweetId);
         $tweet->delete();
     }
-
 }

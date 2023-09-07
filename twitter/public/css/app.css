@@ -35,3 +35,30 @@
     color: black;
     font-weight: bold;
 }
+
+.tweet-form-container {
+    display: flex;
+    justify-content: center;
+}
+
+.tweet-form-box {
+    border: 2px solid black;
+    padding: 20px;
+    position: relative;
+    width: 440px;
+    border-radius: 10px;
+}
+
+.tweet-textarea {
+    resize: none;
+    width: 400px;
+    height: 170px;
+    border-radius: 5px;
+}
+
+.tweet-submit-button {
+    position: absolute;
+    bottom: 1px;
+    right: 10px;
+    border-radius: 100px;
+}
