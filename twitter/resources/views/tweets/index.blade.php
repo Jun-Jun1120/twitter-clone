@@ -16,9 +16,6 @@
         </div>
     </form>
 
-
-
-
 @if(!request()->has('search'))
     <!-- 作成フォーム -->
     @if(session('message'))

@@ -3,9 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-
 
 class SearchRequest extends FormRequest
 {
@@ -27,7 +24,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'sometimes|required|max:20'
+            'search' => 'sometimes|required|max:' . config('const.MAX_LENGTH')
         ];
     }
 
@@ -35,7 +32,7 @@ class SearchRequest extends FormRequest
     {
         return [
             'search.required' => '1文字以上入力して下さい',
-            'search.max' => '20文字以内で入力して下さい',
+            'search.max' => ':max文字以内で入力して下さい',
         ];
     }
 }

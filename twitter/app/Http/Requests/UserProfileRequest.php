@@ -24,7 +24,7 @@ class UserProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|string|min:2|max:20',
+            'name' => 'sometimes|string|min:' . config('const.NAME_MIN_LENGTH') . '|max:' . config('const.NAME_MAX_LENGTH'),
             'email' => 'sometimes|nullable|email:filter,dns'
         ];
     }
@@ -32,8 +32,8 @@ class UserProfileRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.min' => '名前は2文字以上で入力して下さい。',
-            'name.max' => '名前は20文字以下で入力して下さい。',
+            'name.min' => config('const.NAME_MIN_LENGTH') . '文字以上で入力して下さい。',
+            'name.max' => config('const.NAME_MAX_LENGTH') . '文字以下で入力して下さい。',
             'email.email' => '有効なメールアドレスを入力してください。',
         ];
     }

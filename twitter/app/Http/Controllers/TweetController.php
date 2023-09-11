@@ -22,11 +22,10 @@ class TweetController extends Controller
     public function index(SearchRequest $request): View|RedirectResponse
     {
         $tweet = new Tweet();
+        $tweets = $tweet->getAll();
 
         if ($request->has('search')) {
             $tweets = $tweet->searchByContent($request->get('search'));
-        } else {
-            $tweets = $tweet->getAll();
         }
 
         return view('tweets.index', ['tweets' => $tweets,'authId' => Auth::id()]);
