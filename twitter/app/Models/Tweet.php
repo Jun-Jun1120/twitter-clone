@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class Tweet extends Model
 {
+    const TWEETS_PER_PAGE = 20;
+
     use HasFactory;
 
     protected $fillable = ['content', 'user_id'];
@@ -24,15 +26,14 @@ class Tweet extends Model
         return $this->belongsTo(User::class)->withDefault(['name' => '削除されたユーザー',]);
     }
 
-
     /**
      * 全てのツイートを作成日時の降順で取得
      *
-     * @return Collection
+     * @return LengthAwarePaginator
      */
-    public function get(): Collection
+    public function getAll(): LengthAwarePaginator
     {
-        return $this->orderBy('created_at', 'desc')->get();
+        return $this->orderBy('created_at', 'desc')->paginate(self::TWEETS_PER_PAGE);
     }
 
     /**
@@ -92,4 +93,36 @@ class Tweet extends Model
         $tweet = $this->find($tweetId);
         $tweet->delete();
     }
+
+    /**
+     * ツイートを検索
+     *
+     * @param string|null $search
+     * @return　LengthAwarePaginator
+     */
+    public function searchByContent(?string $search): LengthAwarePaginator
+    {
+        $query = $this->query();
+
+        if ($search)
+        {
+            // 全角スペースを半角に変換
+            $spaceConversion = mb_convert_kana($search, 's');
+
+            // 単語を半角スペースで区切り、配列にする
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+            // 単語をループで回し、ツイートの内容と部分一致するものがあれば、$queryとして保持される
+            foreach($wordArraySearched as $value)
+            {
+                $query->where('content', 'like', '%'.$value.'%');
+            }
+        }
+
+        // 上記で取得した$queryをページネート
+        $tweets = $query->paginate(self::TWEETS_PER_PAGE)->withQueryString();
+
+        return $tweets;
+    }
+
 }

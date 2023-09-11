@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{tweet}/edit', [TweetController::class, 'edit'])->name('edit');
         Route::put('/{tweet}', [TweetController::class, 'update'])->name('update');
         Route::delete('/{tweet}', [TweetController::class, 'destroy'])->name('destroy');
+        Route::get('/search',[TweetController::class,'search'])->name('search');
     });
 
     // マイページに関するルート
