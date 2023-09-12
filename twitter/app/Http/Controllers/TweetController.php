@@ -15,11 +15,12 @@ class TweetController extends Controller
 
     /**
      * ツイート一覧を表示
+     * 検索クエリが存在する場合、検索する
      *
-     * @param Request $request
-     * @return View|RedirectResponse
+     * @param SearchRequest $request
+     * @return View
      */
-    public function index(SearchRequest $request): View|RedirectResponse
+    public function index(SearchRequest $request): View
     {
         $tweet = new Tweet();
         $tweets = $tweet->getAll();

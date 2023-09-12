@@ -97,26 +97,23 @@ class Tweet extends Model
     /**
      * ツイートを検索
      *
-     * @param string|null $search
-     * @return　LengthAwarePaginator
+     * @param string $search
+     * @return LengthAwarePaginator
      */
-    public function searchByContent(?string $search): LengthAwarePaginator
+    public function searchByContent(string $search): LengthAwarePaginator
     {
         $query = $this->query();
 
-        if ($search)
+        // 全角スペースを半角に変換
+        $spaceConversion = mb_convert_kana($search, 's');
+
+        // 単語を半角スペースで区切り、配列にする
+        $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+        // 単語をループで回し、ツイートの内容と部分一致するものがあれば、$queryとして保持される
+        foreach($wordArraySearched as $value)
         {
-            // 全角スペースを半角に変換
-            $spaceConversion = mb_convert_kana($search, 's');
-
-            // 単語を半角スペースで区切り、配列にする
-            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-
-            // 単語をループで回し、ツイートの内容と部分一致するものがあれば、$queryとして保持される
-            foreach($wordArraySearched as $value)
-            {
-                $query->where('content', 'like', '%'.$value.'%');
-            }
+            $query->where('content', 'like', '%'.$value.'%');
         }
 
         // 上記で取得した$queryをページネート

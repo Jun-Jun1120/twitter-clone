@@ -24,7 +24,7 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'search' => 'sometimes|required|max:' . config('const.MAX_LENGTH')
+            'search' => 'sometimes|required|max:' . config('const.SEARCH.MAX')
         ];
     }
 
