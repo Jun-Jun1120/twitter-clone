@@ -4,22 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\Tweet;
 use App\Http\Requests\TweetRequest;
+use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
-
 
 class TweetController extends Controller
 {
+
     /**
      * ツイート一覧を表示
+     * 検索クエリが存在する場合、検索する
      *
+     * @param SearchRequest $request
      * @return View
      */
-    public function index(): View
+    public function index(SearchRequest $request): View
     {
         $tweet = new Tweet();
-        $tweets = $tweet->get();
+        $tweets = $tweet->getAll();
+
+        if ($request->has('search')) {
+            $tweets = $tweet->searchByContent($request->get('search'));
+        }
 
         return view('tweets.index', ['tweets' => $tweets,'authId' => Auth::id()]);
     }

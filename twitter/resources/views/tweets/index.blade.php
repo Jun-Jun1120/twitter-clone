@@ -2,6 +2,21 @@
 
 @section('content')
 
+    <!-- ユーザー検索フォーム -->
+    @if ($errors->has('search'))
+        <div class="alert alert-danger">
+            {{ $errors->first('search') }}
+        </div>
+    @endif
+
+    <form method="GET" action="{{ route('tweets.index') }}">
+        <input type="search" placeholder="検索するキーワード" name="search" value="@if (isset($search)) {{ $search }} @endif">
+        <div>
+            <button type="submit">検索</button>
+        </div>
+    </form>
+
+@if(!request()->has('search'))
     <!-- 作成フォーム -->
     @if(session('message'))
         <div class="alert {{ session('error') ? 'alert-danger' : 'alert-success' }}">
@@ -22,6 +37,7 @@
             </form>
         </div>
     </div>
+@endif
 
     <br><br>
 
@@ -46,6 +62,7 @@
                 @endif
             </li>
         @endforeach
+    {{ $tweets->links('pagination::bootstrap-4') }}
     </ul>
 
 @endsection
