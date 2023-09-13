@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\TweetController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,12 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{tweet}/edit', [TweetController::class, 'edit'])->name('edit');
         Route::put('/{tweet}', [TweetController::class, 'update'])->name('update');
         Route::delete('/{tweet}', [TweetController::class, 'destroy'])->name('destroy');
+    // いいね機能に関するルート
+        Route::post('/{tweet}/like', [LikeController::class, 'like'])->name('like');
+        Route::delete('/{tweet}/unlike', [LikeController::class, 'unlike'])->name('unlike');
+        Route::get('/{tweet}/isLiked', [LikeController::class, 'isLiked'])->name('isLiked');
     });
+
 
     // マイページに関するルート
     Route::group(['prefix' => 'mypage', 'as' => 'mypage.'], function() {

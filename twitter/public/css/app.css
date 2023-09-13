@@ -62,3 +62,11 @@
     right: 10px;
     border-radius: 100px;
 }
+
+.like-button {
+    color: grey;
+}
+
+.like-button.liked {
+    color: red;
+}

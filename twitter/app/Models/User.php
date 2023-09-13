@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Tweet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -83,6 +84,16 @@ class User extends Authenticatable
     public function unfollow(int $userId): void
     {
         $this->following()->detach($userId);
+    }
+
+    /**
+     * UserテーブルのidとLikeテーブルのuser_id紐付け
+     *
+     * @return BelongsToMany
+     */
+    public function likedTweets(): BelongsToMany
+    {
+        return $this->belongsToMany(Tweet::class, 'likes', 'user_id', 'post_id');
     }
 
 }

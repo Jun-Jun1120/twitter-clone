@@ -7,7 +7,6 @@ use App\Http\Requests\TweetRequest;
 use App\Http\Requests\SearchRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 
 class TweetController extends Controller
