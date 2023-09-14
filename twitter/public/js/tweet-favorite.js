@@ -1,16 +1,15 @@
 $(document).ready(function () {
     const csrfToken = $('meta[name="csrf-token"]').attr("content");
 
-    // ボタンのいいねの状態を更新する関数
     const updateButtonState = (button, isLiked) => {
         if (isLiked) {
             button.removeClass("far").addClass("fas liked");
-        } else {
+        }
+        if (!isLiked) {
             button.removeClass("fas liked").addClass("far");
         }
     };
 
-    // 各いいねボタンに対しての処理
     $(".like-button").each(function () {
         const button = $(this);
         const tweetId = button.data("tweet-id");
@@ -39,7 +38,8 @@ $(document).ready(function () {
                             likeCountElement.text(data.likeCount);
                         },
                     });
-                } else {
+                }
+                if (!data.isLiked) {
                     // いいねされていない場合、いいねを追加するリクエストを送信
                     $.post(
                         `/tweets/${tweetId}/like`,

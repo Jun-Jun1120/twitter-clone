@@ -2,14 +2,13 @@
 
 @section('content')
 
-    <!--エラーメッセージを表示>
+    <!-- ユーザー検索フォーム -->
     @if ($errors->has('search'))
         <div class="alert alert-danger">
             {{ $errors->first('search') }}
         </div>
     @endif
 
-    <!-- ユーザー検索フォーム>
     <form method="GET" action="{{ route('tweets.index') }}">
         <input type="search" placeholder="検索するキーワード" name="search" value="@if (isset($search)) {{ $search }} @endif">
         <div>
