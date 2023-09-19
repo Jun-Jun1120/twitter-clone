@@ -134,4 +134,14 @@ class Tweet extends Model
         return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id');
     }
 
+    /**
+     * ツイートのLikeの数を取得
+     *
+     * @return integer
+     */
+    public function getLikeCount(): int
+    {
+        return $this->likedByUsers()->count();
+    }
+    
 }

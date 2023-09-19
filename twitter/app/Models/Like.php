@@ -17,11 +17,11 @@ class Like extends Model
      * @param User $user
      * @return void
      */
-    public function addLike(Tweet $tweet, User $user): void
+    public function addLike(int $tweetId, int $userId): void
     {
         $this->create([
-            'user_id' => $user->id,
-            'post_id' => $tweet->id
+            'user_id' => $userId,
+            'post_id' => $tweetId
         ]);
     }
 

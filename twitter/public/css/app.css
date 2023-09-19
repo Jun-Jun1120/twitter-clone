@@ -70,3 +70,11 @@
 .like-button.liked {
     color: red;
 }
+
+.like-container {
+    margin-right: 10px;
+}
+
+.tweet-dropdown {
+    margin-left: 10px;
+}
