@@ -15,13 +15,13 @@ $(document).ready(function () {
         const tweetId = button.data("tweet-id");
 
         // ページ読み込み時に各ツイートがいいねされているか確認
-        $.get(`/tweets/${tweetId}/isLiked`, function (data) {
+        $.get(`/tweets/${tweetId}/returnLikeStatus`, function (data) {
             updateButtonState(button, data.isLiked);
         });
 
         // いいねボタンがクリックされたとき処理
         button.on("click", function () {
-            $.get(`/tweets/${tweetId}/isLiked`, function (data) {
+            $.get(`/tweets/${tweetId}/returnLikeStatus`, function (data) {
                 if (data.isLiked) {
                     // すでにいいねされている場合、いいねを取り消すリクエストを送信
                     $.ajax({
