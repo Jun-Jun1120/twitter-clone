@@ -10,13 +10,13 @@ class Like extends Model
 {
     protected $fillable = ['user_id', 'post_id'];
 
-    /**
-     * いいねをする
-     *
-     * @param Tweet $tweet
-     * @param User $user
-     * @return void
-     */
+/**
+ * いいねをする
+ *
+ * @param int $tweetId
+ * @param int $userId
+ * @return void
+ */
     public function addLike(int $tweetId, int $userId): void
     {
         $this->create([
@@ -25,28 +25,28 @@ class Like extends Model
         ]);
     }
 
-    /**
-     * いいねを外す
-     *
-     * @param Tweet $tweet
-     * @param User $user
-     * @return void
-     */
-    public function removeLike(Tweet $tweet, User $user): void
+/**
+ * いいねを外す
+ *
+ * @param int $tweetId
+ * @param int $userId
+ * @return void
+ */
+    public function removeLike(int $tweetId, int $userId): void
     {
-        $this->where('user_id', $user->id)->where('post_id', $tweet->id)->delete();
+        $this->where('user_id', $userId)->where('post_id', $tweetId)->delete();
     }
 
-    /**
-     * いいねしているかどうか確認
-     *
-     * @param Tweet $tweet
-     * @param User $user
-     * @return bool
-     */
-    public function isLiked(Tweet $tweet, User $user): bool
+/**
+ * いいねしているかどうか確認
+ *
+ * @param int $tweetId
+ * @param int $userId
+ * @return bool
+ */
+    public function isLiked(int $tweetId, int $userId): bool
     {
-        return $this->where('user_id', $user->id)->where('post_id', $tweet->id)->exists();
+        return $this->where('user_id', $userId)->where('post_id', $tweetId)->exists();
     }
 
 }

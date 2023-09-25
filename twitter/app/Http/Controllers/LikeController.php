@@ -13,11 +13,10 @@ class LikeController extends Controller
     /**
      * 「いいね」する
      *
-     * @param Request $request
      * @param Tweet $tweet
      * @return JsonResponse
      */
-    public function like(Request $request, Tweet $tweet): JsonResponse
+    public function like(Tweet $tweet): JsonResponse
     {
         try {
             $like = new Like();
@@ -32,15 +31,14 @@ class LikeController extends Controller
     /**
      * 「いいね」を取り消す
      *
-     * @param Request $request
      * @param Tweet $tweet
      * @return JsonResponse
      */
-    public function unlike(Request $request, Tweet $tweet): JsonResponse
+    public function unlike(Tweet $tweet): JsonResponse
     {
         try {
             $like = new Like();
-            $like->removeLike($tweet, Auth::user());
+            $like->removeLike($tweet->id, Auth::id());
             $likeCount = $tweet->getLikeCount();
             return response()->json(['isLiked' => false, 'likeCount' => $likeCount]);
         } catch (\Exception $e) {
@@ -49,16 +47,15 @@ class LikeController extends Controller
     }
 
     /**
-     * 「いいね」しているかどうかをチェックする
+     * 「いいね」の状態を返却する
      *
-     * @param Request $request
      * @param Tweet $tweet
      * @return JsonResponse
      */
-    public function isLiked(Request $request, Tweet $tweet): JsonResponse
+    public function returnLikeStatus(Tweet $tweet): JsonResponse
     {
         $like = new Like();
-        if ($like->isLiked($tweet, Auth::user())) {
+        if ($like->isLiked($tweet->id, Auth::id())) { 
             return response()->json(['isLiked' => true]);
         }
         return response()->json(['isLiked' => false]);
