@@ -36,7 +36,7 @@ Route::middleware(['auth'])->group(function() {
     // いいね機能に関するルート
         Route::post('/{tweet}/like', [LikeController::class, 'like'])->name('like');
         Route::delete('/{tweet}/unlike', [LikeController::class, 'unlike'])->name('unlike');
-        Route::get('/{tweet}/isLiked', [LikeController::class, 'isLiked'])->name('isLiked');
+        Route::get('/{tweet}/returnLikeStatus', [LikeController::class, 'returnLikeStatus'])->name('returnLikeStatus');
     });
 
 
@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function() {
         Route::put('/', [UserProfileController::class, 'update'])->name('update');
         Route::delete('/', [UserProfileController::class, 'destroy'])->name('destroy');
         Route::get('/users', [UserProfileController::class, 'index'])->name('users.index');
+        Route::get('/liked', [UserProfileController::class, 'showLikedTweets'])->name('liked');
 
         // フォローに関するルート
         Route::post('/follow/{userId}', [UserProfileController::class, 'follow'])->name('follow');

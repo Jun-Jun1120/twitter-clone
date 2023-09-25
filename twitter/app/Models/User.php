@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Tweet;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -96,4 +97,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Tweet::class, 'likes', 'user_id', 'post_id');
     }
 
+    /**
+     * ユーザーが「いいね」したツイートを取得
+     *
+     * @return Collection
+     */
+    public function fetchLikedTweets(): Collection
+    {
+        return $this->likedTweets()->with('user')->get();
+    }
 }

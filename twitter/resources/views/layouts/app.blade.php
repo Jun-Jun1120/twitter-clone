@@ -70,8 +70,12 @@
                                         {{ __('ユーザー一覧') }}
                                     </a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('mypage.liked') }}">
+                                        {{ __('いいねした投稿') }}
+                                    </a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                    onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </a>

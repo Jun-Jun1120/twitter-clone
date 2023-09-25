@@ -50,6 +50,8 @@
 
     <a href="{{ route('mypage.index') }}" class="btn btn-secondary btn-custom mb-3">ユーザー 一覧</a>
 
+    <a href="{{ route('mypage.liked') }}" class="btn btn-info btn-custom mb-3">いいねしたツイート</a>
+
 </div>
 
 @endsection
