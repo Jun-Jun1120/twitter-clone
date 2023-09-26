@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Tweet;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Like extends Model

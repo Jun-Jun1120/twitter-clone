@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Tweet;
 use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 
 class LikeController extends Controller
@@ -22,7 +21,9 @@ class LikeController extends Controller
             $like = new Like();
             $like->addLike($tweet->id, Auth::id());
             $likeCount = $tweet->getLikeCount();
-            return response()->json(['isLiked' => true, 'likeCount' => $likeCount]);
+            $isLiked = true;
+
+            return response()->json(['isLiked' => $isLiked, 'likeCount' => $likeCount]);
         } catch (\Exception $e) {
             return response()->json(['message' => '予期せぬエラーが発生しました']);
         }
@@ -40,7 +41,9 @@ class LikeController extends Controller
             $like = new Like();
             $like->removeLike($tweet->id, Auth::id());
             $likeCount = $tweet->getLikeCount();
-            return response()->json(['isLiked' => false, 'likeCount' => $likeCount]);
+            $isLiked = false;
+
+            return response()->json(['isLiked' => $isLiked, 'likeCount' => $likeCount]);
         } catch (\Exception $e) {
             return response()->json(['message' => '予期せぬエラーが発生しました']);
         }
@@ -55,9 +58,8 @@ class LikeController extends Controller
     public function returnLikeStatus(Tweet $tweet): JsonResponse
     {
         $like = new Like();
-        if ($like->isLiked($tweet->id, Auth::id())) { 
-            return response()->json(['isLiked' => true]);
-        }
-        return response()->json(['isLiked' => false]);
+        $isLiked = $like->isLiked($tweet->id, Auth::id());
+
+        return response()->json(['isLiked' => $isLiked]);
     }
 }
