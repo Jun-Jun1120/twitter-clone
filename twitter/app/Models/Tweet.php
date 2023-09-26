@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -122,4 +124,24 @@ class Tweet extends Model
         return $tweets;
     }
 
+    /**
+     * Likeテーブルのpost_idカラムと、idを紐付け
+     *
+     * @return BelongsToMany
+     */
+    public function likedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id');
+    }
+
+    /**
+     * ツイートのLikeの数を取得
+     *
+     * @return integer
+     */
+    public function getLikeCount(): int
+    {
+        return $this->likedByUsers()->count();
+    }
+    
 }

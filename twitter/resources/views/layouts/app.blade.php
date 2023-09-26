@@ -18,6 +18,10 @@
 
     <!-- css -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- リンクやスタイル -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+</head>
 </head>
 <body>
     <div id="app">
@@ -66,8 +70,12 @@
                                         {{ __('ユーザー一覧') }}
                                     </a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('mypage.liked') }}">
+                                        {{ __('いいねした投稿') }}
+                                    </a>
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                    onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
                                         {{ __('ログアウト') }}
                                     </a>

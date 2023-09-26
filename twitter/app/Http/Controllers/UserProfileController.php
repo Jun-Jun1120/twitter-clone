@@ -119,4 +119,16 @@ class UserProfileController extends Controller
         $users = Auth::user()->followers()->simplePaginate(self::USERS_PER_PAGE);
         return view('mypage.followers', ['users' => $users]);
     }
+
+    /**
+     * いいねした投稿一覧ページを表示する
+     *
+     * @return View
+     */
+    public function showLikedTweets(): View
+    {
+        $likedTweets = Auth::user()->fetchLikedTweets();
+        return view('mypage.liked', compact('likedTweets'));
+    }
+
 }
