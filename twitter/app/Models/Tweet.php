@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class Tweet extends Model
 {
@@ -143,5 +144,14 @@ class Tweet extends Model
     {
         return $this->likedByUsers()->count();
     }
-    
+
+    /**
+     * リプライとのリレーション
+     *
+     * @return hasMany
+     */
+    public function replies():HasMany
+    {
+        return $this->hasMany(Reply::class);
+    }
 }

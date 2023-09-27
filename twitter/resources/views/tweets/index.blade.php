@@ -87,16 +87,26 @@
                             </a>
                         </div>
 
-                        <!-- いいねボタンとカウント -->
                         <hr>
-                        <div class="like-container">
-                            <i class="far fa-heart like-button" data-tweet-id="{{ $tweet->id }}"></i>
-                            <span class="like-count">{{ $tweet->likedByUsers->count() }}</span>
+                        <!-- いいねアイコンとカウント、リプライアイコンとカウント -->
+                        <div class="action-container d-flex align-items-center px-3">
+                            <div class="like-container me-3 d-flex align-items-center">
+                                <i class="far fa-heart like-button" data-tweet-id="{{ $tweet->id }}"></i>
+                                <span class="like-count">{{ $tweet->likedByUsers->count() }}</span>
+                            </div>
+
+                            <div class="reply-container d-flex align-items-center">
+                                <a href="{{ route('tweets.show', $tweet->id) }}" class="text-dark text-decoration-none">
+                                    <i class="fas fa-reply"></i> <span class="reply-count">{{ $tweet->replies->count() }}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+    </div>
+
 
         <!-- ページネーションリンク -->
         {{ $tweets->links('pagination::bootstrap-4') }}

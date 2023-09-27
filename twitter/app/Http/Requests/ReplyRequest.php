@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\MaxWordCountValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UserProfileRequest extends FormRequest
+class ReplyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,18 +25,14 @@ class UserProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'sometimes|string|min:' . config('const.NAME.MIN') . '|max:' . config('const.NAME.MAX'),
-            'email' => 'sometimes|nullable|email:filter,dns'
+            'content' => ['required', new MaxWordCountValidation(280)]
         ];
     }
 
     public function messages()
     {
         return [
-            'name.min' => config('const.NAME.MIN') . '文字以上で入力して下さい。',
-            'name.max' => config('const.NAME.MAX') . '文字以下で入力して下さい。',
-            'email.email' => '有効なメールアドレスを入力してください。',
+            'content.required' => '文字を1文字以上入力して下さい',
         ];
     }
-
 }
