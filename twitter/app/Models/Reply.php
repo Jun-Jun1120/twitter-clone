@@ -14,6 +14,26 @@ class Reply extends Model
     protected $fillable = ['body', 'user_id', 'tweet_id'];
 
     /**
+     * ツイートとのリレーション
+     *
+     * @return BelongsTo
+     */
+    public function tweet(): BelongsTo
+    {
+        return $this->belongsTo(Tweet::class);
+    }
+
+    /**
+     * ユーザーとのリレーション
+     *
+     * @return BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * リプライを作成します
      *
      * @param string $content
@@ -67,34 +87,14 @@ class Reply extends Model
     }
 
     /**
-     * ツイートとのリレーション
-     *
-     * @return BelongsTo
-     */
-    public function tweet(): BelongsTo
-    {
-        return $this->belongsTo(Tweet::class);
-    }
-
-    /**
-     * ユーザーとのリレーション
-     *
-     * @return BelongsTo
-     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    /**
      * リプライが指定したユーザーによって所有されているかを確認
      *
      * @param int $userId
      * @return boolean
      */
-        public function isOwnedBy(int $userId): bool
-        {
-            return $this->user_id === $userId;
-        }
+    public function isOwnedBy(int $userId): bool
+    {
+        return $this->user_id === $userId;
+    }
 
 }

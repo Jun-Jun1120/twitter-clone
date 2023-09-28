@@ -41,7 +41,7 @@ class ReplyController extends Controller
     {
         try {
             if (is_null($reply)) {
-                throw new \Exception('該当するツイートが見つかりませんでした。');
+                throw new Exception('該当するツイートが見つかりませんでした。');
             }
 
             if (!$reply->isOwnedBy(Auth::id())) {
