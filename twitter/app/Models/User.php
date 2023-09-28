@@ -25,12 +25,32 @@ class User extends Authenticatable
     protected $dates = ['deleted_at'];
 
     /**
+     * リプライとのリレーション
+     *
+     * @return HasMany
+     */
+    public function replies(): HasMany
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    /**
+     * リレーション userテーブルのidとLikeテーブルのuser_id紐付け
+     *
+     * @return BelongsToMany
+     */
+    public function likedTweets(): BelongsToMany
+    {
+        return $this->belongsToMany(Tweet::class, 'likes', 'user_id', 'post_id');
+    }
+
+    /**
     * ユーザーのプロフィールを更新
     *
     * @param array $userData
     * @return void
     */
-    public function updateUserProfile(array $userData): void 
+    public function updateUserProfile(array $userData): void
     {
         if (empty($userData['email'])) {
             unset($userData['email']);
@@ -89,16 +109,6 @@ class User extends Authenticatable
     }
 
     /**
-     * UserテーブルのidとLikeテーブルのuser_id紐付け
-     *
-     * @return BelongsToMany
-     */
-    public function likedTweets(): BelongsToMany
-    {
-        return $this->belongsToMany(Tweet::class, 'likes', 'user_id', 'post_id');
-    }
-
-    /**
      * ユーザーが「いいね」したツイートを取得
      *
      * @return Collection
@@ -106,16 +116,6 @@ class User extends Authenticatable
     public function fetchLikedTweets(): Collection
     {
         return $this->likedTweets()->with('user')->orderBy('created_at', 'desc')->get();
-    }
-
-    /**
-     * リプライとのリレーション
-     *
-     * @return HasMany
-     */
-    public function replies(): HasMany
-    {
-        return $this->hasMany(Reply::class);
     }
 
 }

@@ -16,7 +16,7 @@
                     <!-- ツイートのヘッダー（ユーザー名と投稿日時） -->
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <span>
-                            {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}のツイート
+                            {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}さんのツイート
                         </span>
                         <small>
                             {{ $tweet->created_at->format('Y-m-d H:i') }}

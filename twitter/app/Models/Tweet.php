@@ -20,6 +20,16 @@ class Tweet extends Model
     protected $fillable = ['content', 'user_id'];
 
     /**
+     * リプライとのリレーション
+     *
+     * @return hasMany
+     */
+    public function replies():HasMany
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    /**
      * ユーザーとのリレーションシップを定義
      *
      * @return BelongsTo
@@ -27,6 +37,16 @@ class Tweet extends Model
     public function user():BelongsTo
     {
         return $this->belongsTo(User::class)->withDefault(['name' => '削除されたユーザー',]);
+    }
+
+    /**
+     * リレーション Likeテーブルのpost_idカラムと、idを紐付け
+     *
+     * @return BelongsToMany
+     */
+    public function likedByUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id');
     }
 
     /**
@@ -126,16 +146,6 @@ class Tweet extends Model
     }
 
     /**
-     * Likeテーブルのpost_idカラムと、idを紐付け
-     *
-     * @return BelongsToMany
-     */
-    public function likedByUsers(): BelongsToMany
-    {
-        return $this->belongsToMany(User::class, 'likes', 'post_id', 'user_id');
-    }
-
-    /**
      * ツイートのLikeの数を取得
      *
      * @return integer
@@ -145,13 +155,4 @@ class Tweet extends Model
         return $this->likedByUsers()->count();
     }
 
-    /**
-     * リプライとのリレーション
-     *
-     * @return hasMany
-     */
-    public function replies():HasMany
-    {
-        return $this->hasMany(Reply::class);
-    }
 }

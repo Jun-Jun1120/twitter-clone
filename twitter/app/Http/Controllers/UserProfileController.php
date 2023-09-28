@@ -56,6 +56,7 @@ class UserProfileController extends Controller
     public function edit(): View
     {
         $authUserMeta = Auth::user();
+
         return view('mypage.edit', compact('authUserMeta'));
     }
 
@@ -82,6 +83,7 @@ class UserProfileController extends Controller
     {
         $authUser = Auth::user();
         $authUser->follow($userId);
+
         return redirect()->back()->with('success', 'ユーザーをフォローしました');
     }
 
@@ -106,6 +108,7 @@ class UserProfileController extends Controller
     public function showFollows(): View
     {
         $users = Auth::user()->following()->simplePaginate(self::USERS_PER_PAGE);
+
         return view('mypage.following', compact('users'));
     }
 
@@ -117,6 +120,7 @@ class UserProfileController extends Controller
     public function showFollowers(): View
     {
         $users = Auth::user()->followers()->simplePaginate(self::USERS_PER_PAGE);
+
         return view('mypage.followers', ['users' => $users]);
     }
 
@@ -128,6 +132,7 @@ class UserProfileController extends Controller
     public function showLikedTweets(): View
     {
         $likedTweets = Auth::user()->fetchLikedTweets();
+
         return view('mypage.liked', compact('likedTweets'));
     }
 

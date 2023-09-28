@@ -78,3 +78,21 @@
 .tweet-dropdown {
     margin-left: 10px;
 }
+
+.search-form {
+    background-color: #dcdcdc;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 20%;
+}
+
+.search-form input {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}

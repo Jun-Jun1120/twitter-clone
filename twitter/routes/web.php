@@ -59,7 +59,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/users', [UserProfileController::class, 'index'])->name('users.index');
         Route::get('/liked', [UserProfileController::class, 'showLikedTweets'])->name('liked');
 
-        // フォローに関するルート
+    // フォローに関するルート
         Route::post('/follow/{userId}', [UserProfileController::class, 'follow'])->name('follow');
         Route::post('/unfollow/{userId}', [UserProfileController::class, 'unfollow'])->name('unfollow');
         Route::get('/following', [UserProfileController::class, 'showFollows'])->name('following');

@@ -2,20 +2,17 @@
 
 @section('content')
 
-    <!-- ユーザー検索エラー表示 -->
+    <!-- ツイート検索エラー表示 -->
     @if ($errors->has('search'))
         <div class="alert alert-danger">
             {{ $errors->first('search') }}
         </div>
     @endif
 
-    <!-- ユーザー検索フォーム -->
-    <form method="GET" action="{{ route('tweets.index') }}">
-        <input type="search" placeholder="検索するキーワード" name="search" value="@if (isset($search)) {{ $search }} @endif">
-        <div>
-            <button type="submit">検索</button>
-        </div>
-    </form>
+    <!-- ツイート検索フォーム -->
+        <form method="GET" action="{{ route('tweets.index') }}" class="search-form">
+            <input type="search" placeholder="検索するキーワード" name="search" value="@if (isset($search)) {{ $search }} @endif">
+        </form>
 
     @if(!request()->has('search'))
 
@@ -51,7 +48,7 @@
                         <!-- ツイートのヘッダー（ユーザー名と投稿日時） -->
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>
-                                {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}のツイート
+                                {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}さんのツイート
                             </span>
                             <small>
                                 {{ $tweet->created_at->format('Y-m-d H:i') }}
