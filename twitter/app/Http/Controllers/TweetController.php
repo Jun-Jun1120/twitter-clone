@@ -122,6 +122,7 @@ class TweetController extends Controller
         }
 
         $tweet->update(['content' => $request->content]);
+
         return redirect()->route('tweets.index')->with('message', 'ツイートの更新に成功しました!');
     }
 
@@ -148,6 +149,7 @@ class TweetController extends Controller
 
             return redirect()->route('tweets.index')->with('message', 'ツイートが削除されました');
         } catch (\Exception $e) {
+
             return redirect()->route('tweets.index')->with('message', '予期せぬエラーが発生しました');
         }
     }

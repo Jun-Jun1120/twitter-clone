@@ -2,20 +2,17 @@
 
 @section('content')
 
-    <!-- ユーザー検索エラー表示 -->
+    <!-- ツイート検索エラー表示 -->
     @if ($errors->has('search'))
         <div class="alert alert-danger">
             {{ $errors->first('search') }}
         </div>
     @endif
 
-    <!-- ユーザー検索フォーム -->
-    <form method="GET" action="{{ route('tweets.index') }}">
-        <input type="search" placeholder="検索するキーワード" name="search" value="@if (isset($search)) {{ $search }} @endif">
-        <div>
-            <button type="submit">検索</button>
-        </div>
-    </form>
+    <!-- ツイート検索フォーム -->
+        <form method="GET" action="{{ route('tweets.index') }}" class="search-form">
+            <input type="search" placeholder="検索するキーワード" name="search" value="@if (isset($search)) {{ $search }} @endif">
+        </form>
 
     @if(!request()->has('search'))
 
@@ -51,7 +48,7 @@
                         <!-- ツイートのヘッダー（ユーザー名と投稿日時） -->
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span>
-                                {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}のツイート
+                                {{ $tweet->user ? $tweet->user->name : '削除されたユーザー' }}さんのツイート
                             </span>
                             <small>
                                 {{ $tweet->created_at->format('Y-m-d H:i') }}
@@ -87,16 +84,26 @@
                             </a>
                         </div>
 
-                        <!-- いいねボタンとカウント -->
                         <hr>
-                        <div class="like-container">
-                            <i class="far fa-heart like-button" data-tweet-id="{{ $tweet->id }}"></i>
-                            <span class="like-count">{{ $tweet->likedByUsers->count() }}</span>
+                        <!-- いいねアイコンとカウント、リプライアイコンとカウント -->
+                        <div class="action-container d-flex align-items-center px-3">
+                            <div class="like-container me-3 d-flex align-items-center">
+                                <i class="far fa-heart like-button" data-tweet-id="{{ $tweet->id }}"></i>
+                                <span class="like-count">{{ $tweet->likedByUsers->count() }}</span>
+                            </div>
+
+                            <div class="reply-container d-flex align-items-center">
+                                <a href="{{ route('tweets.show', $tweet->id) }}" class="text-dark text-decoration-none">
+                                    <i class="fas fa-reply"></i> <span class="reply-count">{{ $tweet->replies->count() }}</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
+    </div>
+
 
         <!-- ページネーションリンク -->
         {{ $tweets->links('pagination::bootstrap-4') }}

@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\ReplyController;
+use App\Http\Controllers\TweetController;
+use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserProfileController;
-use App\Http\Controllers\TweetController;
-use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,12 +34,20 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/{tweet}/edit', [TweetController::class, 'edit'])->name('edit');
         Route::put('/{tweet}', [TweetController::class, 'update'])->name('update');
         Route::delete('/{tweet}', [TweetController::class, 'destroy'])->name('destroy');
+
     // いいね機能に関するルート
         Route::post('/{tweet}/like', [LikeController::class, 'like'])->name('like');
         Route::delete('/{tweet}/unlike', [LikeController::class, 'unlike'])->name('unlike');
         Route::get('/{tweet}/returnLikeStatus', [LikeController::class, 'returnLikeStatus'])->name('returnLikeStatus');
     });
 
+    // リプライに関するルート
+    Route::group(['prefix' => 'replies', 'as' => 'replies.'], function() {
+        Route::post('/{tweet}', [ReplyController::class, 'store'])->name('store');
+        Route::get('/{reply}/edit', [ReplyController::class, 'edit'])->name('edit');
+        Route::put('/{reply}', [ReplyController::class, 'update'])->name('update');
+        Route::delete('/{reply}', [ReplyController::class, 'destroy'])->name('destroy');
+    });
 
     // マイページに関するルート
     Route::group(['prefix' => 'mypage', 'as' => 'mypage.'], function() {
@@ -50,7 +59,7 @@ Route::middleware(['auth'])->group(function() {
         Route::get('/users', [UserProfileController::class, 'index'])->name('users.index');
         Route::get('/liked', [UserProfileController::class, 'showLikedTweets'])->name('liked');
 
-        // フォローに関するルート
+    // フォローに関するルート
         Route::post('/follow/{userId}', [UserProfileController::class, 'follow'])->name('follow');
         Route::post('/unfollow/{userId}', [UserProfileController::class, 'unfollow'])->name('unfollow');
         Route::get('/following', [UserProfileController::class, 'showFollows'])->name('following');

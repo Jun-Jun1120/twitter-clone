@@ -25,6 +25,7 @@ class LikeController extends Controller
 
             return response()->json(['isLiked' => $isLiked, 'likeCount' => $likeCount]);
         } catch (\Exception $e) {
+
             return response()->json(['message' => '予期せぬエラーが発生しました']);
         }
     }
@@ -45,6 +46,7 @@ class LikeController extends Controller
 
             return response()->json(['isLiked' => $isLiked, 'likeCount' => $likeCount]);
         } catch (\Exception $e) {
+
             return response()->json(['message' => '予期せぬエラーが発生しました']);
         }
     }
